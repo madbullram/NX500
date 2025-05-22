@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CB500X | NX500 Owners Pan India - FAQ</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .chart-container { /* Adhering to constraint, though no charts are used */
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 0; /* No actual chart, so height is 0 */
+            max-height: 0; /* No actual chart, so max-height is 0 */
+        }
+        .active-nav-item {
+            background-color: #DBEAFE; /* Tailwind's blue-100 */
+            color: #2563EB; /* Tailwind's blue-600 */
+            font-weight: 600;
+        }
+        .message-item:hover {
+            background-color: #f9fafb; /* Tailwind's gray-50 */
+        }
+        /* Custom scrollbar for better aesthetics */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+        .highlight {
+            background-color: yellow;
+            font-weight: bold;
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="bg-gray-100 text-gray-800">
+    <div class="container mx-auto p-4 max-w-7xl flex flex-col min-h-screen">
+        <header class="mb-8 text-center">
+            <h1 class="text-3xl font-bold text-neutral-700">CB500X | NX500 Owners Pan India - Chat Explorer</h1>
+        </header>
+
+        <div class="flex flex-col md:flex-row gap-6 flex-grow">
+            <nav class="md:w-1/4 bg-white p-4 rounded-lg shadow-md h-screen md:max-h-[calc(100vh-150px)] overflow-y-auto">
+                <div class="mb-6">
+                    <h2 class="text-xl font-semibold text-neutral-700 mb-3">Main Sections</h2>
+                    <button id="btn-nx500" class="w-full text-left px-4 py-2 mb-2 rounded-md hover:bg-blue-50 transition-colors">🏍️ NX500/CB500X Queries</button>
+                    <button id="btn-other" class="w-full text-left px-4 py-2 rounded-md hover:bg-blue-50 transition-colors">⚙️ Other Biking Queries</button>
+                </div>
+                <div>
+                    <h2 class="text-xl font-semibold text-neutral-700 mb-3">Topics</h2>
+                    <div id="sub-navigation" class="space-y-1">
+                        </div>
+                </div>
+            </nav>
+
+            <main class="md:w-3/4 bg-white p-6 rounded-lg shadow-md h-screen md:max-h-[calc(100vh-150px)] flex flex-col">
+                <div class="mb-4">
+                    <input type="text" id="search-bar" placeholder="Search within current topic..." class="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                </div>
+                <div id="content-area" class="flex-grow overflow-y-auto pr-2">
+                    <div id="introduction-content" class="prose max-w-none">
+                        <h2 class="text-2xl font-semibold text-neutral-700 mb-3">Welcome!</h2>
+                        <p class="mb-4">This interactive explorer helps you navigate the summarized discussions from the CB500X | NX500 Owners Pan India WhatsApp group. Select a main section on the left (either NX500/CB500X specific queries or other biking related topics) to see its sub-topics. Clicking on a sub-topic will display the summarized messages related to it.</p>
+                        <p>You can use the search bar above to quickly find keywords within the messages of the currently selected topic.</p>
+                        <p class="mt-4 text-sm text-gray-600">This application is designed for easy consumption and exploration of the chat's key information. The content is based on the summarized version of the chat log. Phone numbers in sender names are partially masked for privacy.</p>
+                    </div>
+                    <div id="topic-introduction" class="prose max-w-none mb-4 hidden">
+                        </div>
+                    <div id="message-list" class="space-y-3">
+                        </div>
+                </div>
+            </main>
+        </div>
+         <footer class="text-center py-6 mt-auto">
+            <p class="text-xs text-gray-600">
+                Copyright - Respective contributors in NX500 India Whatsapp Group. Maintained by - Madbullram@gmail.com
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        const chatData = {
+            "nx500": {
+                "introduction": "This section covers discussions specifically related to the Honda NX500 and CB500X motorcycles, including owner experiences, technical issues, modifications, and maintenance.",
+                "topics": {
+                    "delivery_impressions": {
+                        "title": "Delivery & Initial Impressions",
+                        "introduction": "Explore early owner experiences, delivery stories, bike naming, and first thoughts from new NX500/CB500X owners. This section also includes links to initial reviews and observations on early modifications.",
+                        "summaries": [
+                            { "sender": "Ram", "message": "Shared his excitement about getting his NX500 delivered (30/10/2024)." },
+                            { "sender": "+91 9766658969, Ram, NX500 Santosh S", "message": "Mention of multiple deliveries in Chennai and Pune, indicating growing popularity." },
+                            { "sender": "+91 9766658969, +91 9925250097, cb500x Mohit", "message": "Several members shared Instagram posts and reels of their new bikes and initial rides." },
+                            { "sender": "Ram", "message": "Named his NX500 \"V'Ger\" (30/10/2024)." },
+                            { "sender": "NX500 Santosh S", "message": "Named his Highness \"Pneuma\" (30/10/2024)." },
+                            { "sender": "+91 7349069001", "message": "Calls his CB500X \"Thorondor\" or \"Jigarthanda\" (30/10/2024)." },
+                            { "sender": "Ram, NX500 Santosh S", "message": "New owners introduced themselves and their biking history (30/10/2024)." },
+                            { "sender": "+91 8277143666", "message": "A YouTube review by +91 8277143666 was widely discussed and praised for its insights, especially on tyres and long-term ownership (20/01/2025). He shared his positive experience clocking 20,000 km." },
+                            { "sender": "SBW Abhishek Mishra", "message": "Mentioned his own initial review and the effort involved in vlogging (20/01/2025)." },
+                            { "sender": "+91 9845342417", "message": "Found +91 8277143666's videos reassuring for NX owners (02/04/2025)." },
+                            { "sender": "+91 8277143666", "message": "Discussion on FuelX Pro for the India spec NX500 (27/01/2025)." },
+                            { "sender": "+91 9035601937, +91 8277143666", "message": "Observations about engine sounds, including a \"tapping sound\" and \"backfire,\" noted as common, even with the original exhaust (03/04/2025 - 04/04/2025)." },
+                            { "sender": "+91 8277143666", "message": "Recommended upgrading rear brake pads to synthetic ones (EBC mentioned) for better performance (07/03/2025)." },
+                            { "sender": "SBW Abhishek Mishra", "message": "Discussion on custom wraps and paint schemes, with examples shared (18/04/2025)." }
+                        ]
+                    },
+                    "warning_lights": {
+                        "title": "Warning Lights & Indicators",
+                        "introduction": "This topic covers discussions around the behavior of various warning lights on the NX500/CB500X, such as the oil light, ABS light, and engine malfunction light (MIL). It includes member experiences, potential causes, and troubleshooting advice.",
+                        "summaries": [
+                            { "sender": "Ram", "message": "Inquired about the oil light being on before ignition (01/11/2024)." },
+                            { "sender": "+91 9535625202, +91 9049294103, +91 8971517726", "message": "Confirmed oil light on before ignition is normal and serves as an indicator check; it should go off after ignition." },
+                            { "sender": "+91 9845342417", "message": "Mentioned similar initial concern about the ABS light, which was clarified as normal (01/11/2024)." },
+                            { "sender": "NX500 Prashanth", "message": "Reported the engine light staying on even after riding (10/04/2025)." },
+                            { "sender": "+91 8308806550", "message": "MIL Cause: Loose connection after panel removal for PPF." },
+                            { "sender": "+91 8308806550", "message": "MIL Cause: Fuel injection pump issue (as per manual)." },
+                            { "sender": "+91 8277143666, +91 9970099456", "message": "MIL Cause: O2 sensor error, especially with full system exhausts. Steady light often O2 sensor; blinking indicates injector error." },
+                            { "sender": "+91 9822099058, +91 9530502002, NX500 Prashanth", "message": "MIL Cause: ABS sensor malfunction due to rear wheel spinning on stand (e.g., during chain lubing) while front is stationary. Light disappeared after riding." },
+                            { "sender": "Godwin RIDE INN Cafe Manali", "message": "MIL Solution: Check error codes with an OBD tool and erase them." },
+                            { "sender": "+91 7013960556", "message": "Reported engine light continuously on after battery restoration (11/05/2025)." }
+                        ]
+                    },
+                    "seat_comfort_modifications": {
+                        "title": "Seat Comfort & Modifications",
+                        "introduction": "A common pain point for many NX500/CB500X riders is the stock seat. This section details user complaints about discomfort, along with various solutions discussed, from simple add-ons like cushions and padded shorts to more involved seat re-cushioning and custom modifications.",
+                        "summaries": [
+                            { "sender": "+91 9970099456, +91 8971517726, +91 7349069001, et al.", "message": "Stock seat found uncomfortable, too firm, causing sore bum within an hour, and a feeling of sliding or being pushed out." },
+                            { "sender": "+91 7975428727", "message": "Recommended Grand Pitstop Gel Air Seat from Amazon for long ride comfort." },
+                            { "sender": "SBW Abhishek Mishra", "message": "Negative experience with air/gel cushions due to displacement, partial coverage, deflation, and disconnected feeling." },
+                            { "sender": "+91 7760015816", "message": "Recommended MotoSkiveez Adventure Shorts." },
+                            { "sender": "SBW Abhishek Mishra", "message": "Suggested shaving stock foam and adding an internal gel layer for seat modification." },
+                            { "sender": "+91 7349069001", "message": "Planned seat redo with high-density foam, inspired by Deep Ranjan Vlogs, at JMJ seat makers in Bangalore." },
+                            { "sender": "+91 9860572392", "message": "Shared experience modifying seat at TipTop and Mankar Seats in Mumbai (width extension, gel, flattening) for ~₹8000." },
+                            { "sender": "Godwin RIDE INN Cafe Manali", "message": "Shared a picture of his custom modified comfy seat (26/03/2025)." },
+                            { "sender": "+91 9860572392", "message": "Inquired about Corbin seats for CB500X/NX500." },
+                            { "sender": "+91 9480208178, NX500 Deepak, NX500 Arun Coimbatore, +91 9972466050", "message": "Some users got used to the stock seat or found it comfortable after an adjustment period." }
+                        ]
+                    },
+                    "wind_buffeting_windshields": {
+                        "title": "Wind Buffeting & Windshields",
+                        "introduction": "Wind buffeting at higher speeds is a common concern, especially for taller riders. This section details various windshield solutions, from extenders to aftermarket replacements, and adjustments for the CB500X.",
+                        "summaries": [
+                            { "sender": "Ram, +91 8660055941, et al.", "message": "Riders around 5'8\" and taller reported significant wind buffeting above 90-100 km/h with stock NX500 windshield." },
+                            { "sender": "cb500x Mohit, NX500 Santosh S", "message": "Shorter riders (5'5\"-5'7\") found stock setup more adequate." },
+                            { "sender": "+91 9845342417, SBW Abhishek Mishra, +91 9049294103", "message": "Prospec windshield extenders (ER720 S2, ER860) significantly reduced buffeting and noise. Downsides: visual obstruction when dirty, potential to fly off." },
+                            { "sender": "Ram", "message": "Carbon Racing windshield height extender (raises stock visor 3 inches) completely solved buffeting for him. Used Himalayan mounting screws." },
+                            { "sender": "+91 9818226683, +91 8605127376", "message": "Givi touring screens (D1203ST, Airflow AF) discussed. D1203ST (10k) found effective. Airflow (19k) is larger and adjustable." },
+                            { "sender": "+91 7349069001", "message": "Used a WRS sport (shorter) windshield on CB500X, suitable for ~100 km/h." },
+                            { "sender": "NX500 Dip", "message": "Adjusting stock CB500X windshield to topmost setting reduced wind noise (Note: NX500 does not have this adjustment)." },
+                            { "sender": "+91 9886566418", "message": "Got windscreen tinted locally for a smoked look." }
+                        ]
+                    },
+                    "handlebar_risers": {
+                        "title": "Handlebar Risers",
+                        "introduction": "To improve riding posture and comfort, especially for reducing forward lean, several owners discussed installing handlebar risers. This section covers types, brands, and installation considerations.",
+                        "summaries": [
+                            { "sender": "NX500 Santosh S, +91 9970099456, +91 9731987218", "message": "Risers installed to reduce forward lean and improve comfort." },
+                            { "sender": "Motourenn", "message": "20mm straight risers used by NX500 Santosh S, SBW Abhishek Mishra, NX500 Vineeth Blr; comfortable, no cable rerouting needed." },
+                            { "sender": "Carbon Racing", "message": "Pull-back risers used by +91 9970099456 with no cable issues. Godwin RIDE INN Cafe Manali had an unused set." },
+                            { "sender": "Goosefits", "message": "Multiway Adjustable Risers (2-inch) required cable rerouting, +91 9766658969 decided against them for now." },
+                            { "sender": "Rox", "message": "2-inch risers used by +91 9860572392 (6ft tall) for a neutral position, required cable rerouting." },
+                            { "sender": "+91 7708432323", "message": "Got risers installed with clutch cable rerouted by SVC." }
+                        ]
+                    },
+                    "footpegs": {
+                        "title": "Footpegs",
+                        "introduction": "Discussions on stock footpeg issues and experiences with aftermarket adventure-style footpegs, focusing on durability and rider comfort for gear shifting and pivoting.",
+                        "summaries": [
+                            { "sender": "NX500 Dip", "message": "Noted shear/deformation on pillion footpeg pin, possibly from mounting bike using it (03/11/2024)." },
+                            { "sender": "+91 9766658969, +91 9731987218", "message": "Motourenn Adventurist Adjustable Footpegs used and liked on NX500 & CB500X. Fit both models." },
+                            { "sender": "+91 7349069001, NX500 Manjunath", "message": "Negative experience with flat adventure footpegs; found them uncomfortable for long rides due to restricted foot pivoting and difficulty with quick gear shifts." },
+                            { "sender": "Godwin RIDE INN Cafe Manali", "message": "Motourenn ADV footpegs got loose but were fine after reinstalling with thread locker." }
+                        ]
+                    },
+                    "fuel_octane_rating": {
+                        "title": "Fuel & Octane Rating",
+                        "introduction": "This section covers discussions on the appropriate fuel for the NX500/CB500X, focusing on octane ratings, ethanol blending, experiences with premium fuels, and fuel efficiency.",
+                        "summaries": [
+                            { "sender": "Ram, NX500 Santosh S, et al.", "message": "Consensus: NX500/CB500X runs fine on 91 octane (normal unleaded) petrol. Higher octane not necessary for its compression ratio (10.7:1)." },
+                            { "sender": "Ram", "message": "All petrol in India is at least E10 (10% ethanol). XP95 also contains ethanol." },
+                            { "sender": "cb500x Mohit", "message": "Preferred XP95 or Shell V-Power for smoother running, though technical benefit debated." },
+                            { "sender": "Ram, SBW Abhishek Mishra", "message": "Argued perceived benefits of premium fuel might be due to better quality/less adulteration or placebo." },
+                            { "sender": "Multiple Users", "message": "Fuel efficiency reported between 26-37 kmpl, depending on riding style and conditions. Console display may be optimistic." },
+                            { "sender": "Ram", "message": "Usable fuel tank capacity from near empty to full is ~17.89 liters." },
+                            { "sender": "Multiple Users", "message": "NX500 console lacks a Distance To Empty (DTE) feature." }
+                        ]
+                    },
+                    "engine_heat": {
+                        "title": "Engine Heat",
+                        "introduction": "Owners discuss their experiences with engine heat, particularly in city traffic and warmer climates. While not extreme for all, it's a noticeable characteristic for some.",
+                        "summaries": [
+                            { "sender": "+91 7738566665, +91 9932649921", "message": "Engine heats up in city traffic, with heat sometimes felt on the tank." },
+                            { "sender": "NX500 Dip, NX500 Ashim Mehndiratta", "message": "Confirmed their bikes (CB500X/NX500) do heat up." },
+                            { "sender": "+91 9742295332", "message": "Advised that increased heat in summer/traffic is normal; check coolant levels if concerned." }
+                        ]
+                    },
+                    "vibrations": {
+                        "title": "Vibrations (General, Handlebar, Footpegs)",
+                        "introduction": "Vibrations are a subjective but discussed topic. This section covers user experiences with vibrations at different RPMs/speeds and potential causes like crash guards, luggage, and handlebar accessories, along with solutions.",
+                        "summaries": [
+                            { "sender": "SBW Abhishek Mishra", "message": "NX500 sweet spot 110-120 km/h (4.5-5k RPM); vibrations on footpegs/handlebars above 130 km/h." },
+                            { "sender": "NX500 Prashanth, +91 7013960556, +91 8446763815", "message": "Vibrations reported post 5k RPM or above 100-110 km/h, sometimes annoying." },
+                            { "sender": "NX500 Deepak, +91 9480208178, +91 8007000478", "message": "Improperly torqued crash guards are a major cause of increased vibrations. Retorquing to spec helps." },
+                            { "sender": "Ram", "message": "Load on top rack can induce vibrations." },
+                            { "sender": "SBW Abhishek Mishra, NX500 Dip", "message": "Barkbusters and Grip Puppies/Grab On covers can slightly reduce handlebar vibrations." },
+                            { "sender": "+91 9845342417, +91 9712900240", "message": "Some riders experienced arm pain or numb hands, possibly due to vibrations." }
+                        ]
+                    },
+                    "gear_shifting_clutch": {
+                        "title": "Gear Shifting & Clutch",
+                        "introduction": "Several users reported a 'clunky' gearbox, especially in lower gears. This section details these experiences, potential causes like clutch adjustment or shifting technique, and discussions on optimal shift points.",
+                        "summaries": [
+                            { "sender": "+91 9945365945, +91 8971517726, et al.", "message": "NX500 gearbox reported as 'clunky,' especially 1st/2nd gear, with loud thud/grrr noises." },
+                            { "sender": "+91 9945365945", "message": "Experienced display showing 'N' after slotting to 1st, requiring re-shift." },
+                            { "sender": "SBW Abhishek Mishra", "message": "Found shifting 2nd to Neutral difficult with engine on." },
+                            { "sender": "+91 7349069001", "message": "Suggested clunkiness might reduce with mileage, but others didn't see improvement." },
+                            { "sender": "Multiple Users", "message": "Clutch adjustments at SVC didn't always resolve clunkiness. Proper free play is important." },
+                            { "sender": "+91 9702019256, +91 8971517726", "message": "Manual suggests shift speeds (e.g., 1st-2nd at 20 km/h); users often shift by feel around 4k RPM." },
+                            { "sender": "+91 7411252452", "message": "Reported clutch plates worn out at 10-12k km due to improper riser installation/cable issues; replacement ~₹9-10k." }
+                        ]
+                    },
+                    "braking_system": {
+                        "title": "Braking System (Issues, Pads, Fluids)",
+                        "introduction": "This section covers significant discussions on front brake issues like sudden free play, experiences with different brake pad brands (OEM, EBC, Vesrah), and the Emergency Stop Signal (ESS) feature.",
+                        "summaries": [
+                            { "sender": "+91 7411252452, +91 9590834847, cb500x Mohit", "message": "Critical issue: Front brake lever experiencing sudden free movement or loss of pressure, recovering afterward. Causes included air in lines, overheating, or faulty aftermarket parts." },
+                            { "sender": "+91 8277143666", "message": "Stock front pads good; recommended synthetic rear pads (e.g., EBC)." },
+                            { "sender": "Multiple Users", "message": "Mixed reviews on EBC brake pads vs. OEM. Some found EBC better for high-speed, others preferred OEM for feel and city use. EBC cost ~₹9.9k for all three sets." },
+                            { "sender": "cb500x Mohit", "message": "Vesrah pads mentioned, availability questioned." },
+                            { "sender": "+91 8446763815", "message": "NX500 has Emergency Stop Signal (ESS): hard braking flashes hazard lights." }
+                        ]
+                    },
+                    "suspension": {
+                        "title": "Suspension",
+                        "introduction": "Discussion on stock suspension performance, rear preload adjustments, front suspension issues like diving or fork seal leaks, and mention of aftermarket options.",
+                        "summaries": [
+                            { "sender": "SBW Abhishek Mishra, +91 7720002540", "message": "NX500 suspension generally seen as an improvement over CB500X." },
+                            { "sender": "Godwin RIDE INN Cafe Manali", "message": "Rear preload adjustable with toolkit; some found it still too soft even at max." },
+                            { "sender": "+91 9945365945", "message": "Noted front brake dive." },
+                            { "sender": "+91 9816006755", "message": "Reported a fork oil leak." },
+                            { "sender": "+91 9884715415", "message": "Mentioned Rally Raid Level 2 suspension on CB500X." }
+                        ]
+                    },
+                    "tyres": {
+                        "title": "Tyres",
+                        "introduction": "Extensive discussion on stock Dunlop tyre performance, lifespan, replacement options (Michelin, Pirelli, Metzeler, Shinko, Apollo, etc.), pricing, sourcing, and recommended tyre pressures. The 'right pull' issue was also linked to tyres by some.",
+                        "summaries": [
+                            { "sender": "Multiple Users", "message": "Stock Dunlop tyres: mixed reviews on grip (good on wet for some, slidy on gravel for others). Lifespan 9k-22k kms. Wobbling/pulling issues sometimes attributed to them." },
+                            { "sender": "Multiple Users", "message": "Popular replacements: Michelin Anakee Adventure (₹44.5k set), Pirelli Scorpion Trail II (₹34-36k set), Metzeler Karoo Street (₹36.7k set). These generally offered better grip and comfort." },
+                            { "sender": "+91 8277143666", "message": "Shinko Trail Master (rear 150/70 R17 ~₹8.5k) a budget option; 150/70 rear & 100/90 front combo helped his wobbling." },
+                            { "sender": "Multiple Users", "message": "Tyre Pressure: Manual recommends 29F/36R psi. Some users vary this slightly based on preference and tyres." },
+                            { "sender": "+91 8277143666, +91 9787711770", "message": "Stock Dunlop tyres suspected by some in the 'right pull' issue. Changing tyres, especially to a different profile, resolved it for some." }
+                        ]
+                    },
+                    "chain_sprockets": {
+                        "title": "Chain & Sprockets",
+                        "introduction": "Covers chain type (O-ring, RK Takasago), maintenance best practices (cleaning, lubing frequency, products), safety warnings for lubing, chain slack adjustment, and sprocket replacement costs/lifespan.",
+                        "summaries": [
+                            { "sender": "+91 9886674453, +91 9766658969", "message": "NX500 uses an O-ring RK Takasago chain." },
+                            { "sender": "Multiple Users", "message": "Maintenance: Clean & lube every 500-700 kms or as needed. Kerosene/diesel for cleaning (O-ring safety debated vs WD-40). Putoline Tech Chain wax, Maxima Chain Wax, Honda 2-in-1 lube popular. Motul often criticized." },
+                            { "sender": "cb500x Mohit, +91 9822099058", "message": "CRITICAL SAFETY WARNING: NEVER lube chain with engine running in gear." },
+                            { "sender": "+91 9590834847", "message": "Sprocket replacement kit ~₹9k + labor. Stock sprockets 15T/41T." },
+                            { "sender": "+91 9741807002", "message": "Chain lifespan can exceed 20k kms with good maintenance." }
+                        ]
+                    },
+                    "crash_guards_engine_guards_sump_guards": {
+                        "title": "Crash Guards / Engine Guards / Sump Guards",
+                        "introduction": "A major topic covering the purpose, necessity, brands (Carbon Racing, SRC, Hepco & Becker, GIVI, SW-Motech, Moto Torque, Zana, OEM), user experiences, installation issues (especially bolt snapping with CR guards), safety concerns regarding frame stress, and weight implications.",
+                        "summaries": [
+                            { "sender": "Multiple Users", "message": "Purpose: Protection of engine/fairing, mounting points, aesthetics. Necessity debated, especially lower guards for on-road use." },
+                            { "sender": "SBW Abhishek Mishra", "message": "Experienced Carbon Racing engine guard bolt snapping, leading to extensive discussion on bolt quality, torque, and guard design affecting frame stress." },
+                            { "sender": "Multiple Users", "message": "Brands: SRC, Hepco & Becker, GIVI, SW-Motech generally well-regarded for quality but pricier. Indian brands like CR, Moto Torque, Zana are more budget-friendly but had mixed reviews on fit/finish/bolt quality." },
+                            { "sender": "Ram's expert friend", "message": "Cautioned that stronger bolts might transfer more stress to the frame; a breaking bolt could be a 'safer' failure." },
+                            { "sender": "Multiple Users", "message": "Proper torque and installation sequence are critical. SVCs may not always follow best practices." }
+                        ]
+                    },
+                    "luggage_systems": {
+                        "title": "Luggage Systems (Top Racks, Panniers, Tank Bags)",
+                        "introduction": "Discussions on various luggage solutions including top racks (OEM, SRC, CR, SW-Motech), top boxes (GIVI, SHAD, Orange Candy, H&B), soft panniers (Dirtsack, Viaterra) and the associated exhaust heat problem, tank bags (magnetic, tank-lock), and handlebar bags.",
+                        "summaries": [
+                            { "sender": "Multiple Users", "message": "Top Racks: Honda OEM (₹25-35k, good but pricey), SRC (lightweight, ~₹13.5k), CR (VFM, paint issues), SW-Motech (plate broke for one user). Zana rack also broke for one user." },
+                            { "sender": "Multiple Users", "message": "Top Boxes: GIVI, SHAD (SH33 good VFM), Orange Candy (55L FRP, good), H&B, SW-Motech DUSC. Large/heavy top boxes affect handling." },
+                            { "sender": "Ram, +91 7720002540", "message": "Soft Saddlebags & Exhaust Heat: Significant issue on NX500. Solutions include exhaust deflectors, heat shields, angled bags (Viaterra Condor 2Up), or custom mounts." },
+                            { "sender": "Multiple Users", "message": "Tank Bags: Magnetic (Viaterra, Rynox - use PPF to protect paint) or Tank Lock (GIVI - secure, no scratches)." },
+                            { "sender": "+91 9972466050", "message": "Handlebar Bags: Viaterra Trailpack fits NX500, good for small items." }
+                        ]
+                    },
+                    "other_accessories_nx": {
+                        "title": "Other Accessories (Lights, Horns, GPS Mounts, etc.)",
+                        "introduction": "Covers a wide range of other accessories like auxiliary lights (Maddog, HJG, Future Eyes, Motorfans, Denali, Baja), horns (Bosch, Hella), mobile/GPS mounts (Bobo, RAM, SP Connect, Quad Lock), dedicated GPS units (Carpuride, Aoocci), USB chargers, tyre inflators, fender extenders, tyre huggers, radiator guards, fork seal covers, tank pads, and ECU tuning.",
+                        "summaries": [
+                            { "sender": "Multiple Users", "message": "Aux Lights: Essential for many due to inadequate stock headlight. Brands: Maddog (Scout-X, Alpha), HJG, Future Eyes F20X, Motorfans L4G, Denali, Baja. Wattage and wiring (use relay) are key." },
+                            { "sender": "Multiple Users", "message": "Horns: Stock horn often found lacking. Bosch, Hella dual horns used." },
+                            { "sender": "Multiple Users", "message": "Mobile Mounts: Vibration is a concern for phone cameras. Bobo, RAM, SP Connect, Quad Lock with dampeners recommended. Dedicated GPS units like Aoocci C5/C6 Pro or Carpuride also discussed." },
+                            { "sender": "Multiple Users", "message": "USB Chargers: Clifftop, Portronics, compact 12V socket chargers (Duracell, Dr Vaku) discussed." },
+                            { "sender": "Multiple Users", "message": "Fender Extenders (Front): Carbon Racing, Prospec. Proper installation crucial to prevent falling off." },
+                            { "sender": "+91 7349069001, SBW Abhishek Mishra", "message": "Tyre Huggers/Splash Guards: GIVI, Puig, Old School Customs. Pyramid Plastics strongly advised against." },
+                            { "sender": "Multiple Users", "message": "Radiator Guards: CR, Moto Torque, Zana, SRC. Necessity debated but generally recommended for protection." },
+                            { "sender": "Multiple Users", "message": "ECU Tuning: FuelX Pro, Powertronic discussed for performance enhancement; O2 sensor compatibility is a factor for NX500." }
+                        ]
+                    },
+                    "service_maintenance_nx": {
+                        "title": "Service & Maintenance",
+                        "introduction": "Details on service intervals, costs, engine oil (grades, consumption, brands), filters, spark plugs, valve clearance, SVC experiences, and DIY maintenance tips for the NX500/CB500X.",
+                        "summaries": [
+                            { "sender": "Multiple Users", "message": "Service Intervals: 1st at 1000km/1 month. Subsequent at 12,000km/1 year. 6k km/6-month check-up is optional but recommended by some SVCs." },
+                            { "sender": "Multiple Users", "message": "Service Costs (1st): Varied from ₹3500-₹7000 depending on location and services included." },
+                            { "sender": "Multiple Users", "message": "Engine Oil: Honda 10W30 JASO MA2. 2.6L with filter. Some oil consumption noted by users. Alternatives like Maxima, Putoline discussed. Oil change frequency debated (manual vs. earlier)." },
+                            { "sender": "Multiple Users", "message": "SVC Experiences: Mixed. Some good, some criticized for upselling or poor workmanship. Using torque wrenches inconsistently." }
+                        ]
+                    },
+                    "handling_issues_nx": {
+                        "title": "Handling Issues (Right Pull, Wobble)",
+                        "introduction": "A significant concern for some NX500 owners is the bike pulling to the right or handlebar wobbles. This section outlines user reports, SVC responses, and potential fixes involving alignment, tyres, or luggage.",
+                        "summaries": [
+                            { "sender": "NX500 Manjunath, NX500 Prashanth, et al.", "message": "Right Pull Issue: Many NX500 owners reported bike pulling right when hands-free. Poll showed 17 affected users." },
+                            { "sender": "Multiple Users", "message": "Possible Causes/Solutions for Right Pull: Handlebar alignment/bushings, fork alignment, rear subframe alignment, tyre issues (stock Dunlops, incorrect profiles), or luggage imbalance. SVCs sometimes fixed it, sometimes dismissed it." },
+                            { "sender": "NX500 Prashanth, +91 7411252452", "message": "Handlebar Wobble: Experienced by some, resolved by subframe alignment or removing top box." },
+                            { "sender": "+91 7411252452", "message": "Honda reportedly aware of the right pull issue (as of 30/01/2025)." }
+                        ]
+                    },
+                    "misc_nx_topics": {
+                        "title": "Miscellaneous NX500/CB500X Topics",
+                        "introduction": "Covers other specific discussions related to the NX500/CB500X, including the horn/indicator switch layout, Honda RoadSync app experiences, comparisons with other bikes, and new Honda model launches.",
+                        "summaries": [
+                            { "sender": "Ram, cb500x Mohit, SBW Abhishek Mishra", "message": "Horn/Indicator Switch Position: Common complaint about Honda's unconventional layout (horn below indicator), causing confusion in emergencies." },
+                            { "sender": "Multiple Users", "message": "Honda RoadSync App: Generally good on Android (calls, music, navigation, WhatsApp). Problematic on iOS (connectivity, volume, feature limitations)." },
+                            { "sender": "Multiple Users", "message": "Comparisons: NX500 generally favored over Himalayan 450 for refinement. Transalp not seen as a major upgrade from CB500X by one user." },
+                            { "sender": "Multiple Users", "message": "New Honda Models: X-ADV 750 and Rebel 500 launches discussed with pricing and specs." }
+                        ]
+                    }
+                }
+            },
+            "other_queries": {
+                "introduction": "This section covers general biking topics beyond the NX500/CB500X specifically, such as discussions on riding gear (helmets, jackets, pants, boots), general accessories, group rides, motorcycle transportation, and other community-related matters.",
+                "topics": {
+                    "helmets": {
+                        "title": "Helmets",
+                        "introduction": "Members discuss various helmet brands, models, types (full-face, ADV), budget considerations, fit, noise levels, and where to purchase them.",
+                        "summaries": [
+                            { "sender": "Multiple Users", "message": "Brands Discussed: LS2 (FF800, Storm, MX701), MT (Thunder 3, Thunder 4), KYT, Axxis, Ignyte, SMK, AGV, Arai, ILM." },
+                            { "sender": "Multiple Users", "message": "Considerations: Budget (under ₹12k to ₹30k+), type (full-face vs ADV), fit, comfort, wind noise (earplugs often used), ventilation." },
+                            { "sender": "Multiple Users", "message": "Purchasing: Local stores (Helmet Mall Bangalore) vs. online (FC-Moto, with customs). Discounts sometimes available." }
+                        ]
+                    },
+                    "riding_jackets": {
+                        "title": "Riding Jackets",
+                        "introduction": "This section covers recommendations for riding jackets across different budgets, types (mesh, all-weather), protection levels, and layering systems including body armour.",
+                        "summaries": [
+                            { "sender": "Multiple Users", "message": "Budget Brands (under ₹20k): Solace Furious (hybrid, L2), Reise (Spidi collab), Shima Meshpro2, Rynox Stealth Evo 3, RE (Alpinestars collab)." },
+                            { "sender": "Multiple Users", "message": "Premium Brands: Revit (lightweight mesh), Klim Induction, RS Taichi Drymaster, Knox Armoured Shirts." },
+                            { "sender": "Multiple Users", "message": "Types: Mesh for hot weather, All-weather with detachable liners. Level 2 armor preferred." },
+                            { "sender": "Fayaz (+91 7013960556), +91 9008163900, +91 9663385910", "message": "Layering Systems: Body armour + outer shell discussed for versatility (off-road impact vs. on-road abrasion)." }
+                        ]
+                    },
+                    "riding_pants": {
+                        "title": "Riding Pants",
+                        "introduction": "Suggestions for riding pants, focusing on budget options and fitment with riding boots.",
+                        "summaries": [
+                            { "sender": "Multiple Users", "message": "Budget Brands (under ₹10k): Mototech, Solace Cool Pro 3, Rynox." },
+                            { "sender": "Multiple Users", "message": "Fit with Boots: Discussion on whether pants go over or inside boots; wearing inside can lead to water ingress." }
+                        ]
+                    },
+                    "riding_boots": {
+                        "title": "Riding Shoes/Boots",
+                        "introduction": "Crucial for protection, members discuss various types of riding boots (Adventure Touring, Sport/Track), brands, comfort, waterproofing, fit, break-in, and purchasing advice.",
+                        "summaries": [
+                            { "sender": "+91 7720002540", "message": "Full-length boots highly recommended for better ankle protection over short/mid-ankle boots." },
+                            { "sender": "Multiple Users", "message": "Adventure Touring Brands: Forma Adventure/Terra Evo (good for wide feet), Falco Mixto/Adventour, TCX Drifter/Infinity/Baja, Alpinestars (Tech series for off-road, Toucan/Belize for touring), SIDI Adventure 2, Gaerne Dakar." },
+                            { "sender": "Multiple Users", "message": "Considerations: Protection vs. comfort, waterproofing (Gore-Tex ideal), fit (toe box width varies), break-in period for stiffer boots." },
+                            { "sender": "Multiple Users", "message": "Purchasing: Try locally if possible (Orion Motors, 6KIOM Bangalore, PRS Mumbai for Forma). Online options like FC-Moto exist." }
+                        ]
+                    },
+                    "other_riding_gear": {
+                        "title": "Other Riding Gear",
+                        "introduction": "Covers discussions on gloves, base layers, hydration solutions, and bike covers.",
+                        "summaries": [
+                            { "sender": "SBW Abhishek Mishra", "message": "Gloves: Full gauntlet recommended for long rides. Shima STX2 mentioned." },
+                            { "sender": "SBW Abhishek Mishra, +91 8105786995", "message": "Base Layers: Compression tights (Decathlon, Rynox), dri-fit tees. Hydration vests or cooling vests for hot weather." },
+                            { "sender": "Multiple Users", "message": "Bike Covers: Polco (Tyvek best), Raida All Season Pro, Neodrift NeoMax. Buckles preferred over elastics. Polyvault shelter as a sturdy alternative." }
+                        ]
+                    },
+                    "general_biking_misc": {
+                        "title": "General Biking Topics & Miscellaneous",
+                        "introduction": "This section includes a variety of other biking-related discussions such as group meetups, motorcycle transportation methods and costs, experiences with Bluetooth intercoms, riding philosophies, road conditions, and general market news.",
+                        "summaries": [
+                            { "sender": "Multiple Users", "message": "Group Meetups: Pan-India meet discussed (Goa, Pench suggested). Local rides in Pune, Bangalore." },
+                            { "sender": "+91 7013960556, SBW Abhishek Mishra, +91 9787711770", "message": "Motorcycle Transportation: Options like SafeExpress, VRL, train, dedicated bike movers discussed with varied costs and reliability." },
+                            { "sender": "Multiple Users", "message": "Bluetooth Intercoms: BluArmor C30/C50 Pro, Edyell C8 Pro, Sena SMH10/BH10, Route95, VNET/EJEAS, Cardo Spirit discussed. Battery life, connectivity, speaker quality are key factors." },
+                            { "sender": "Ram, SBW Abhishek Mishra, NX500 Vineeth Blr", "message": "Riding Philosophy & Experiences: Personal stories, 'just ride' attitude, overcoming challenges shared." },
+                            { "sender": "Multiple Users", "message": "Road Conditions & Route Advice: Specific route conditions for Bangalore-Tiruvannamalai, Bangalore-Coimbatore, Pune-Goa discussed." },
+                            { "sender": "Multiple Users", "message": "Bike Washing: Pressure washer use (Karcher, Shakti) with caution. Waterless wash (Proklear) for bugs." }
+                        ]
+                    }
+                }
+            }
+        };
+
+        const subNavigation = document.getElementById('sub-navigation');
+        const contentArea = document.getElementById('content-area');
+        const introductionContent = document.getElementById('introduction-content');
+        const topicIntroductionDiv = document.getElementById('topic-introduction');
+        const messageListDiv = document.getElementById('message-list');
+        const searchBar = document.getElementById('search-bar');
+
+        let currentSection = null;
+        let currentTopic = null;
+        let currentMessages = [];
+
+        function maskPhoneNumber(sender) {
+            const phoneRegex = /^\+91\s*(\d{10})$/; 
+            const plainNumberRegex = /^\d{10}$/; 
+            
+            let match = sender.match(phoneRegex);
+            let numberPart = "";
+
+            if (match) {
+                numberPart = match[1];
+            } else {
+                match = sender.match(plainNumberRegex);
+                if (match) {
+                    numberPart = match[0];
+                    return `+91 ******${numberPart.slice(-4)}`;
+                }
+            }
+
+            if (numberPart.length === 10) {
+                return `+91 ******${numberPart.slice(-4)}`;
+            }
+            
+            const parts = sender.split(',').map(part => {
+                part = part.trim();
+                let partMatch = part.match(phoneRegex);
+                let partNumber = "";
+                if (partMatch) {
+                    partNumber = partMatch[1];
+                } else {
+                    partMatch = part.match(plainNumberRegex);
+                    if (partMatch) {
+                        partNumber = partMatch[0];
+                        return `+91 ******${partNumber.slice(-4)}`;
+                    }
+                }
+                if (partNumber.length === 10) {
+                    return `+91 ******${partNumber.slice(-4)}`;
+                }
+                return part; 
+            });
+            return parts.join(', ');
+        }
+
+
+        function displayContent(sectionKey, topicKey) {
+            currentSection = sectionKey;
+            currentTopic = topicKey;
+            introductionContent.classList.add('hidden');
+            topicIntroductionDiv.classList.remove('hidden');
+            messageListDiv.innerHTML = '';
+            
+            const section = chatData[sectionKey];
+            const topic = section.topics[topicKey];
+
+            topicIntroductionDiv.innerHTML = `
+                <h3 class="text-xl font-semibold text-neutral-700 mb-2">${topic.title}</h3>
+                <p class="text-sm text-gray-600 mb-4">${topic.introduction}</p>
+            `;
+            
+            currentMessages = topic.summaries;
+            renderMessages(currentMessages);
+            updateActiveNav(sectionKey, topicKey);
+        }
+        
+        function renderMessages(messagesToRender) {
+            messageListDiv.innerHTML = ''; 
+            const searchTerm = searchBar.value.toLowerCase();
+
+            messagesToRender.forEach(summary => {
+                const messageDiv = document.createElement('div');
+                messageDiv.className = 'message-item p-3 border-b border-gray-200';
+                
+                const maskedSender = maskPhoneNumber(summary.sender);
+                let senderHTML = `<p class="font-semibold text-blue-600 text-sm">${maskedSender}</p>`;
+                let messageHTML = `<p class="text-gray-700">${summary.message}</p>`;
+
+                if (searchTerm) {
+                    const regex = new RegExp(searchTerm, 'gi');
+                    senderHTML = senderHTML.replace(regex, match => `<span class="highlight">${match}</span>`);
+                    messageHTML = messageHTML.replace(regex, match => `<span class="highlight">${match}</span>`);
+                }
+                
+                messageDiv.innerHTML = senderHTML + messageHTML;
+                messageListDiv.appendChild(messageDiv);
+            });
+        }
+
+        function populateSubNavigation(sectionKey) {
+            subNavigation.innerHTML = '';
+            const section = chatData[sectionKey];
+            if (section && section.topics) {
+                Object.keys(section.topics).forEach(topicKey => {
+                    const topic = section.topics[topicKey];
+                    const li = document.createElement('a');
+                    li.href = "#";
+                    li.className = 'block px-4 py-2 text-sm rounded-md hover:bg-blue-50 nav-topic';
+                    li.textContent = topic.title;
+                    li.dataset.section = sectionKey;
+                    li.dataset.topic = topicKey;
+                    li.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        displayContent(sectionKey, topicKey);
+                    });
+                    subNavigation.appendChild(li);
+                });
+            }
+        }
+
+        function displaySectionIntroduction(sectionKey) {
+            currentSection = sectionKey;
+            currentTopic = null; 
+            searchBar.value = ''; 
+            introductionContent.classList.add('hidden');
+            topicIntroductionDiv.classList.remove('hidden');
+            messageListDiv.innerHTML = ''; 
+
+            const section = chatData[sectionKey];
+            topicIntroductionDiv.innerHTML = `
+                <h2 class="text-2xl font-semibold text-neutral-700 mb-3">${sectionKey === 'nx500' ? 'NX500/CB500X Specific Queries' : 'Other Biking Related Queries'}</h2>
+                <p class="text-gray-700">${section.introduction}</p>
+            `;
+            updateActiveNav(sectionKey, null);
+        }
+
+        function updateActiveNav(activeSectionKey, activeTopicKey) {
+            document.querySelectorAll('#sub-navigation a, #btn-nx500, #btn-other').forEach(el => {
+                el.classList.remove('active-nav-item');
+            });
+
+            if (activeSectionKey === 'nx500') {
+                document.getElementById('btn-nx500').classList.add('active-nav-item');
+            } else if (activeSectionKey === 'other_queries') {
+                document.getElementById('btn-other').classList.add('active-nav-item');
+            }
+
+            if (activeTopicKey) {
+                const activeTopicEl = document.querySelector(`#sub-navigation a[data-topic="${activeTopicKey}"]`);
+                if (activeTopicEl) {
+                    activeTopicEl.classList.add('active-nav-item');
+                }
+            }
+        }
+        
+        document.getElementById('btn-nx500').addEventListener('click', () => {
+            populateSubNavigation('nx500');
+            displaySectionIntroduction('nx500');
+        });
+
+        document.getElementById('btn-other').addEventListener('click', () => {
+            populateSubNavigation('other_queries');
+            displaySectionIntroduction('other_queries');
+        });
+
+        searchBar.addEventListener('input', () => {
+            if (currentMessages.length > 0) {
+                renderMessages(currentMessages);
+            }
+        });
+
+        populateSubNavigation('nx500');
+        displaySectionIntroduction('nx500');
+
+    </script>
+</body>
+</html>

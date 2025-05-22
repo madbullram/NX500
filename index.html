@@ -70,7 +70,7 @@
                  background-color: transparent; 
             }
         }
-        .main-title-text-shadow {
+        .main-title-text-shadow, .footer-text-shadow {
             text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5); 
         }
 
@@ -116,7 +116,7 @@
             </main>
         </div>
          <footer class="text-center py-6 mt-auto">
-            <p class="text-xs text-slate-500">
+            <p class="text-xs text-white footer-text-shadow">
                 Copyright - Respective contributors in NX500 India Whatsapp Group. Maintained by - Madbullram@gmail.com
             </p>
         </footer>
@@ -543,7 +543,7 @@
                      if (digits.length === 10) return `+91 ******${digits.slice(-4)}`;
                 } else if (p4) { 
                     let fullNum = p4.replace(/\s/g, '');
-                    if (fullNum.length >= 10 && fullNum.length <= 12) { // Common length for landline with STD
+                    if (fullNum.length >= 10 && fullNum.length <= 12) { 
                          return `******${fullNum.slice(-4)}`;
                     }
                 }
